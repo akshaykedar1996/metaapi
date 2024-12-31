@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin Dashboard{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0f2027fe;
+            --blue: #00aaff;
+            --golden: #f4c10f;
+            --dark-gray: #0b2c3fde;
+            --hover-bg: #102f41;
+        }
+
+        body {
+            background: var(--black);
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+        }
+
+        .header {
+            background: var(--dark-gray);
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo{
+            background: var(--dark-gray);
+            color: #f4c10f;
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+            position: relative; /* Ensure stacking context */
+            z-index: 20; /* Higher than the sidebar */
+        }
+
+
+        .header .toggle-btn {
+            display: none;
+            background: var(--blue);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .header .toggle-btn:hover {
+            background: var(--golden);
+            color: #000;
+        }
+
+        .sidebar {
+            margin-top: 48px;
+            background: var(--dark-gray);
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 20px;
+            transform: translateX(0);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .sidebar.hidden {
+            transform: translateX(-100%);
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar ul li {
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            flex: 1;
+        }
+
+        .sidebar ul li a:hover {
+            color: var(--golden);
+        }
+
+        .sidebar ul li:hover {
+            background: var(--hover-bg);
+            transform: scale(1.05);
+            cursor: pointer;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .header .toggle-btn {
+                display: inline-block;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+                position: fixed;
+                z-index: 10;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding-top: 80px;
+            }
+        }
+        .menu-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    gap: 15px;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.menu-icon {
+    font-size: 1.5rem;
+    color: var(--golden);
+    transition: color 0.3s ease;
+}
+
+.menu-link {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.menu-item:hover {
+    background: var(--hover-bg);
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.menu-item:hover .menu-icon {
+    color: var(--blue);
+}
+
+.menu-item:hover .menu-link {
+    color: var(--golden);
+}
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">Admin Dashboard</div>
+        <button class="toggle-btn" id="toggleSidebar">☰</button>
+    </div>
+
+    <div class="sidebar" id="sidebar">
+        <ul>
+            <li class="menu-item">
+                <i class="fas fa-tachometer-alt menu-icon"></i>
+                <a href="{% url 'deshboard_admin' %}" class="menu-link">Dashboard</a>
+            </li>
+
+            <li class="menu-item">
+                <i class="fas fa-comments menu-icon"></i> <!-- Font Awesome Chat Icon -->
+                <a href="{% url 'admin_message' %}" class="menu-link">Trade Message</a>
+            </li>
+            
+            <li class="menu-item">
+                <i class="fas fa-users menu-icon"></i>
+                <a href="#" class="menu-link">Users</a>
+            </li>
+            <li class="menu-item">
+                <i class="fas fa-chart-line menu-icon"></i>
+                <a href="#" class="menu-link">Reports</a>
+            </li>
+            <li class="menu-item">
+                <i class="fas fa-cogs menu-icon"></i>
+                <a href="#" class="menu-link">Settings</a>
+            </li>
+            <li class="menu-item">
+                <i class="fas fa-sign-out-alt menu-icon"></i>
+                <a href="{% url 'logout_admin' %}" class="menu-link">Logout</a>
+            </li>
+        </ul>
+        
+    </div>
+
+    <div class="main-content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <script>
+        const toggleBtn = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

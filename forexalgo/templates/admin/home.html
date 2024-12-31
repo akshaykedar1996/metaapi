@@ -1,0 +1,61 @@
+{% extends 'admin/super_base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<style>
+    .dashboard-card {
+    background: linear-gradient(135deg, var(--blue), var(--golden));
+    color: #fff;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.dashboard-card h5 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.dashboard-card p {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .dashboard-card {
+        font-size: 0.9rem;
+    }
+}
+
+</style>
+<div class="container my-4">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card p-3 dashboard-card">
+                <h5>Total Users</h5>
+                <p>1,234</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3 dashboard-card">
+                <h5>Revenue</h5>
+                <p>$12,345</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3 dashboard-card">
+                <h5>Active Orders</h5>
+                <p>567</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
